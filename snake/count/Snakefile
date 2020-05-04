@@ -1,0 +1,20 @@
+def alphabet(sequence:str):
+    return sorted(list(set(sequence)))
+
+
+rule count:
+   input: "input/", "names.lst"
+   output: "output/"
+   run:
+     with open(input[1]) as lst:
+        for name in lst:
+           with open(input[0] + name.strip()) as file:
+               seq = "".join(file.readlines()).strip()
+           with open(output[0] + name.strip(), "w") as out:
+               for letter in alphabet(seq):
+                    out.write(letter + ": " + str(seq.count(letter)) + "\n")
+
+rule names:
+   input: "input/"
+   output: "names.lst"
+   shell: "ls {input} > {output}"

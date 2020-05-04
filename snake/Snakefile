@@ -1,0 +1,15 @@
+rule create_greetings:
+   input: "names.lst"
+   output: "output/"
+   run:
+     with open(input[0]) as inward:
+        for names in inward:
+            with open(output[0] + names.strip(), "w") as outward:
+               outward.write("Hello " + names.strip() + "!\n")
+         
+
+rule listing:
+   input: "input"
+   output: "names.lst"
+   shell: "ls {input} > names.lst"
+
